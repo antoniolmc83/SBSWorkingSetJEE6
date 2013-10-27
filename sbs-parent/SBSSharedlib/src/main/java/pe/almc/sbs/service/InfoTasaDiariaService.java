@@ -14,4 +14,8 @@ public interface InfoTasaDiariaService {
 	InfoTasaDiaria findById(String entidadcodigo, String condicioncodigo, String regioncodigo, Date fecha);
 	InfoTasaDiaria findById(EntidadFinanciera entidadFinanciera, Condicion condicion, Region region, Date fecha);
 	List<InfoTasaDiaria> findAll();
+	List<InfoTasaDiaria> findByEntidadcodigo(String codigoEntidad);
+	List<InfoTasaDiaria> listarTasasEntidadPorEntidad(String codigo, Date fecha);
+	List<InfoTasaDiaria> listarTasasEntidadPorEntidad(String codigo, String fecha);
+	
 }

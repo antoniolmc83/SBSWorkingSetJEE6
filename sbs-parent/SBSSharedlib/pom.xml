@@ -7,7 +7,7 @@
     <groupId>almc.sbs</groupId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  
+    
   <artifactId>SBSSharedlib</artifactId>
   <name>SBSSharedlib</name>
   <packaging>jar</packaging>
@@ -38,10 +38,6 @@
 	<dependency>
 		<groupId>org.springframework</groupId>
 		<artifactId>spring-context</artifactId>
-	</dependency>
-	<dependency>
-		<groupId>org.springframework</groupId>
-		<artifactId>spring-web</artifactId>
 	</dependency>
 	<dependency>
 		<groupId>org.springframework</groupId>

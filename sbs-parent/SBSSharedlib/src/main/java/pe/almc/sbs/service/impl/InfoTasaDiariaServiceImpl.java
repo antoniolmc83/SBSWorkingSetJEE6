@@ -1,5 +1,8 @@
 package pe.almc.sbs.service.impl;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -47,6 +50,28 @@ public class InfoTasaDiariaServiceImpl implements InfoTasaDiariaService{
 	@Override
 	public List<InfoTasaDiaria> findAll() {
 		return informacionTasaDiariaRepository.findAll();
+	}
+
+	@Override
+	public List<InfoTasaDiaria> findByEntidadcodigo(String entidadCodigo) {
+		return informacionTasaDiariaRepository.findByEntidadcodigo(entidadCodigo);
+	}
+
+	@Override
+	public List<InfoTasaDiaria> listarTasasEntidadPorEntidad(String codigo, Date fecha) {		
+		return informacionTasaDiariaRepository.listarTasasEntidadPorEntidad(codigo, fecha);
+	}
+	
+	@Override
+	public List<InfoTasaDiaria> listarTasasEntidadPorEntidad(String codigo, String fecha) {
+		Date fechaF = null;
+		SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd"); 
+		try {
+			fechaF = df.parse(fecha);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return informacionTasaDiariaRepository.listarTasasEntidadPorEntidad(codigo, fechaF);
 	}
 
 }

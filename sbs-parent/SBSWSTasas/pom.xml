@@ -7,9 +7,8 @@
     <groupId>almc.sbs</groupId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <groupId>almc.sbs</groupId>
+
   <artifactId>SBSWSTasas</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
   <name>SBSWSTasas Maven Webapp</name>
   <url>http://maven.apache.org</url>
@@ -17,10 +16,126 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
+	
+        <!-- JAX-WS --> 
+		<dependency>
+		  	<groupId>com.sun.xml.ws</groupId>
+		  	<artifactId>jaxws-rt</artifactId>
+		  	<version>2.2.8</version>	  			
+		</dependency>
+		
+    <dependency>
+      <groupId>org.jvnet.jax-ws-commons.spring</groupId>
+      <artifactId>jaxws-spring</artifactId>
+      <version>1.9</version>
+      <exclusions>
+		  <exclusion>
+           		<groupId>org.springframework</groupId>
+      			<artifactId>spring</artifactId>
+          </exclusion>      
+		  <exclusion>
+           		<groupId>org.springframework</groupId>
+      			<artifactId>spring-core</artifactId>
+          </exclusion>
+       	  <exclusion>
+          		<groupId>org.springframework</groupId>
+     			<artifactId>spring-context</artifactId>
+       	  </exclusion>
+       	  <exclusion>
+          		<groupId>com.sun.xml.stream.buffer</groupId>
+     			<artifactId>streambuffer</artifactId>
+       	  </exclusion>
+       	  <exclusion>
+          		<groupId>org.jvnet.staxex</groupId>
+     			<artifactId>stax-ex</artifactId>
+       	  </exclusion>
+<!--        	  <exclusion> -->
+<!--           		<groupId>org.jvnet.staxex</groupId> -->
+<!--      			<artifactId>stax-api</artifactId> -->
+<!--        	  </exclusion>         	         	         	                   -->
+      </exclusions>
+    </dependency>
+      		
+
+		<!-- JPA --> 
+		<dependency>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.0-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.transaction</groupId>
+			<artifactId>jta</artifactId>
+		</dependency>    
+	
+		<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.springframework</groupId> -->
+<!-- 			<artifactId>spring-beans</artifactId> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.springframework</groupId> -->
+<!-- 			<artifactId>spring-context-support</artifactId> -->
+<!-- 		</dependency> -->
+	
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.springframework.data</groupId> -->
+<!-- 			<artifactId>spring-data-jpa</artifactId> -->
+<!-- 		</dependency> -->
+		<!-- JPA Provider -->
+		<dependency>
+			<groupId>org.eclipse.persistence</groupId>
+			<artifactId>eclipselink</artifactId>
+		</dependency>
+
+		<!-- Postgres -->
+		<dependency>
+			<groupId>postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+		</dependency>
+
+		<!-- CGLIB is required to process @Configuration classes -->
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+		</dependency>	
+		     
+    <dependency>
+    	<groupId>${project.groupId}</groupId>
+    	<artifactId>SBSSharedlib</artifactId>
+    	<version>${project.version}</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>com.sun.istack</groupId>
+      <artifactId>istack-commons-runtime</artifactId>
+      <version>2.2</version>
+      <scope>test</scope>
+    </dependency>
+            
   </dependencies>
+  
+  
+    <repositories>
+        <repository>
+            <id>java.net</id>
+            <url>http://download.java.net/maven/2</url>
+        </repository>
+    </repositories>
+    
   <build>
     <finalName>SBSWSTasas</finalName>
   </build>

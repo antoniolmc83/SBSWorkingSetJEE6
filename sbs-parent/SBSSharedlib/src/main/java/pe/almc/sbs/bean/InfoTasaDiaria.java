@@ -18,10 +18,10 @@ import javax.persistence.Transient;
 @Table(schema = "public")
 @NamedQueries({
     @NamedQuery(name = "InfoTasaDiaria.findAll", query = "SELECT i FROM InfoTasaDiaria i"),
-    @NamedQuery(name = "InfoTasaDiaria.findByEntidadcodigo", query = "SELECT i FROM InfoTasaDiaria i WHERE i.infotasadiariaPK.entidadcodigo = :entidadcodigo"),
+    @NamedQuery(name = "InfoTasaDiaria.findByEntidadcodigo", query = "SELECT i FROM InfoTasaDiaria i WHERE i.infotasadiariaPK.entidadcodigo = ?1"),
     @NamedQuery(name = "InfoTasaDiaria.findByCondicioncodigo", query = "SELECT i FROM InfoTasaDiaria i WHERE i.infotasadiariaPK.condicioncodigo = :condicioncodigo"),
     @NamedQuery(name = "InfoTasaDiaria.findByRegioncodigo", query = "SELECT i FROM InfoTasaDiaria i WHERE i.infotasadiariaPK.regioncodigo = :regioncodigo"),
-    @NamedQuery(name = "InfoTasaDiaria.findByFecha", query = "SELECT i FROM InfoTasaDiaria i WHERE i.infotasadiariaPK.fecha = :fecha")})
+    @NamedQuery(name = "InfoTasaDiaria.findByFecha", query = "SELECT i FROM InfoTasaDiaria i WHERE i.infotasadiariaPK.fecha = ?1")})
 public class InfoTasaDiaria implements Serializable{
 
 	/**

@@ -14,16 +14,19 @@ import pe.almc.sbs.bean.Condicion;
 import pe.almc.sbs.bean.EntidadFinanciera;
 import pe.almc.sbs.bean.InfoTasaDiaria;
 import pe.almc.sbs.bean.Region;
+import pe.almc.sbs.repository.InfoTasaDiariaRepository;
 import pe.almc.sbs.service.InfoTasaDiariaService;
 
 
 public class InfoTasaDiariaTestCase {
 
 	private InfoTasaDiariaService infoTasaDiariaService;
+	private InfoTasaDiariaRepository infoTasaDiariaRepository;
 	
 	public InfoTasaDiariaTestCase() {
 		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
 		infoTasaDiariaService = applicationContext.getBean(InfoTasaDiariaService.class);
+		infoTasaDiariaRepository = applicationContext.getBean(InfoTasaDiariaRepository.class);
 	}
 	
 	@Test
@@ -59,9 +62,23 @@ public class InfoTasaDiariaTestCase {
 	}
 	
 	@Test
-	public void testFindByCodigoEntidad() {
-		List<InfoTasaDiaria> l = infoTasaDiariaService.findByEntidadcodigo("4103");
-		TestCase.assertEquals(91, l.size());
+	public void testFindByEntidadAndFecha() {
+		GregorianCalendar gc = new GregorianCalendar();
+		gc.set(2013, 9, 26);
+		
+		List<InfoTasaDiaria> l = infoTasaDiariaService.listarTasasEntidadPorEntidad("4103", gc.getTime());
+		List<InfoTasaDiaria> l2 = infoTasaDiariaService.listarTasasEntidadPorEntidad("4103", "20131026");
+		
+		TestCase.assertEquals(l2.size(), l.size());
 	}
+	
+	@Test
+	public void testFindByFecha() {
+		GregorianCalendar gc = new GregorianCalendar();
+		gc.set(2013, 9, 26);		
+		List<InfoTasaDiaria> l = infoTasaDiariaRepository.findByFecha(gc.getTime());
+		TestCase.assertEquals(936, l.size());
+	}
+
 
 }

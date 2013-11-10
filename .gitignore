@@ -1,1 +1,7 @@
 /.project
+/sbs-parent/SBSPortalScheduler/.settings/
+/sbs-parent/SBSPortalScheduler/target/
+/sbs-parent/SBSSharedlib/.settings/
+/sbs-parent/SBSSharedlib/target/
+/sbs-parent/SBSWSTasas/.settings/
+/sbs-parent/SBSWSTasas/target/

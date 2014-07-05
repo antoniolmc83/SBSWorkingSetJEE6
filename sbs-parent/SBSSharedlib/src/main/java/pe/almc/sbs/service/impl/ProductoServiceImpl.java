@@ -6,6 +6,8 @@ import javax.annotation.Resource;
 import javax.persistence.EntityExistsException;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import pe.almc.sbs.bean.Producto;
 import pe.almc.sbs.bean.ProductoPK;
@@ -34,6 +36,7 @@ public class ProductoServiceImpl implements ProductoService{
 	}
 
 	@Override
+	@Transactional(isolation = Isolation.READ_COMMITTED)
 	public List<Producto> findAll() {
 		return productoRepository.findAll();
 	}

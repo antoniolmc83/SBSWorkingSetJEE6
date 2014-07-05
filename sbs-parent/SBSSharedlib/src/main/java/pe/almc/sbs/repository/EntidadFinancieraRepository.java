@@ -7,5 +7,5 @@ import pe.almc.sbs.bean.EntidadFinanciera;
 
 public interface EntidadFinancieraRepository extends JpaRepository<EntidadFinanciera, String>{
 	
-	public abstract EntidadFinanciera findByNombresbs(String nombresbs);
+	EntidadFinanciera findByNombresbs(String nombresbs);
 }

@@ -29,7 +29,7 @@ import pe.almc.util.http.SBSParametros;
 @Service(value="sbsTasasFacade")
 public class SBSTasasFacade {
 
-	private final static Logger logger = LoggerFactory.getLogger(SBSTasasFacade.class); 
+	private static Logger logger = LoggerFactory.getLogger(SBSTasasFacade.class); 
 	@Resource
 	private SbsWebClientService sbsWebClient;
 	
@@ -50,6 +50,33 @@ public class SBSTasasFacade {
 		return resp;
 	}
 	
+	/**
+	 * Recupera todos las regiones
+	 * @return
+	 */
+	public List<Condicion> condicionFindAll() {
+		return condicionService.findAll();
+	}
+	
+	
+	/**
+	 * Recupera todos los productoss
+	 * @return
+	 */
+	public List<Producto> productoFindAll() {
+		return productoService.findAll();
+	}	
+	
+	/**
+	 * Recupera todos las regiones
+	 * @return
+	 */
+	public List<Region> regionFindAll() {
+		return regionService.findAll();
+	}
+	
+	
+
 	@Transactional
 	public String obtenerRegiones(){
 		String error = "1";
@@ -126,6 +153,7 @@ public class SBSTasasFacade {
 		}			
 	}
 	
+	@Transactional(rollbackFor=Exception.class)
 	public String obtenerTasas(){
 		String resp = "";
 		List<Region> lstRegion = null;
@@ -136,7 +164,6 @@ public class SBSTasasFacade {
 		List<InfoTasaDiaria> lstInfoTasaDiariaTotal = new ArrayList<InfoTasaDiaria>();
 
 		//Para inicializar la invocacion a la pagina SBS
-		//sbsWebClient.recuperarRegion();
 		//1 Recorrer regiones
 		lstRegion = regionService.findAll();
 		for( Region r:lstRegion ){
@@ -146,7 +173,6 @@ public class SBSTasasFacade {
 			sbsWebClient.recuperarTiposOperacion(r.getCodigo());			
 			//1.1 Por cada region recuperar los tipos de producto
 			for( TipoProducto tp : TipoProducto.values() ){
-				//tp = TipoProducto.DEPOSITOS;
 				logger.info("	>Tipo Producto: " + tp.name());
 				sbsWebClient.recuperarProductos(tp.toString());
 				//1.2 Recuperar los productos
@@ -154,9 +180,9 @@ public class SBSTasasFacade {
 				//1.2.1 Por cada producto recuperar las condiciones
 				for(Producto p : lstProducto){
 					logger.info("		>>Producto: " + p.getDescripcion());
-					//sbsWebClient.recuperarCondiciones(p.getProductoPK().getCodigo());
 					//1.2.1 Recuperar las condiciones
-					lstCondicion = p.getLstCondicios();					
+					p.getLstCondiciones().isEmpty();
+					lstCondicion = p.getLstCondiciones();					
 					//1.2.1.1 Por cada condicion recuperar las infotasas
 					for(Condicion c:lstCondicion){						
 						sbsTasaRequest = new SBSTasaRequest();						
@@ -169,8 +195,7 @@ public class SBSTasasFacade {
 							sbsTasaRequest.setTxtTipoProducto( URLEncoder.encode(tp.name(), SBSParametros.ENCODE_UTF_8) );
 							logger.info("			>>Condicion: " + sbsTasaRequest.toString());
 						} catch (UnsupportedEncodingException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+							logger.error("Encoding Error", e);
 						}
 						//Setetando los datos de condicion y region a lo recuperado
 						List<InfoTasaDiaria> lstTemp = sbsWebClient.consultarTasas(sbsTasaRequest);
@@ -216,7 +241,16 @@ public class SBSTasasFacade {
 		if( entidadFinanciera!=null ){
 			infoTasaDiaria.setEntidadfinanciera(entidadFinanciera);
 			try{
-				infoTasaDiariaService.create(infoTasaDiaria);
+				
+				if( infoTasaDiariaService.findById(entidadFinanciera, infoTasaDiaria.getCondicion(), infoTasaDiaria.getRegion(), 
+						infoTasaDiaria.getInfotasadiariaPK().getFecha()) == null){
+					infoTasaDiariaService.create(infoTasaDiaria);	
+				}else{
+					logger.info("Ya existe info tasa diaria: " + infoTasaDiaria);
+				}
+				
+				
+				
 			}catch (EntityExistsException e) {
 				logger.error("Tasa Duplicada: " + e);
 			}
@@ -225,10 +259,7 @@ public class SBSTasasFacade {
 		}else{
 			logger.warn("No existe: " + nombreSBS);
 		}
-		
-		
-		
-		//infoTasaDiariaService.create(infoTasaDiaria);		
+				
 	}
 	
 }

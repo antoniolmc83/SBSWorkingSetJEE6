@@ -1,6 +1,5 @@
 package pe.almc.sbs.service.impl;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -9,6 +8,8 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.persistence.EntityExistsException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +23,8 @@ import pe.almc.sbs.service.InfoTasaDiariaService;
 
 @Service
 public class InfoTasaDiariaServiceImpl implements InfoTasaDiariaService{
+	
+	private static Logger logger = LoggerFactory.getLogger(InfoTasaDiariaServiceImpl.class);
 
 	@Resource
 	private InfoTasaDiariaRepository informacionTasaDiariaRepository;
@@ -65,12 +68,12 @@ public class InfoTasaDiariaServiceImpl implements InfoTasaDiariaService{
 	@Override
 	public List<InfoTasaDiaria> listarTasasEntidadPorEntidad(String codigo, String fecha) {
 		Date fechaF = null;
-		SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd"); 
+		SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd"); 		
 		try {
 			fechaF = df.parse(fecha);
 		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+			logger.error("Fecha no tiene formato adecuado", e);
+		}		
 		return informacionTasaDiariaRepository.listarTasasEntidadPorEntidad(codigo, fechaF);
 	}
 

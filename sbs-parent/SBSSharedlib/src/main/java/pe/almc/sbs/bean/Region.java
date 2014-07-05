@@ -10,6 +10,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import pe.almc.common.MAGICNumber;
+
 @Entity
 @Table(schema = "public")
 @NamedQueries({
@@ -24,10 +26,10 @@ public class Region implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Id
 	@Basic(optional = false)
-	@Column(nullable = false, length = 4)
+	@Column(nullable = false, length = MAGICNumber.L4)
 	private String codigo;
 	
-	@Column(length = 30)
+	@Column(length = MAGICNumber.L30)
 	private String nombre;
 	
 	public Region() {

@@ -13,6 +13,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import pe.almc.common.MAGICNumber;
+
 @Entity
 @Table(schema = "public")
 @NamedQueries({
@@ -28,10 +30,10 @@ public class Condicion implements Serializable{
 	
 	@Id
 	@Basic(optional = false)
-	@Column(nullable = false, length = 7)
+	@Column(nullable = false, length = MAGICNumber.L7)
 	private String codigo;
 	
-	@Column(length = 70)
+	@Column(length = MAGICNumber.L70)
 	private String descripcion;
 	
 	@JoinColumns({

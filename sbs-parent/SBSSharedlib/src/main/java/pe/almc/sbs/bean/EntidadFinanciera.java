@@ -10,6 +10,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import pe.almc.common.MAGICNumber;
+
 @Entity
 @Table(schema = "public")
 @NamedQueries({
@@ -24,13 +26,13 @@ public class EntidadFinanciera implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Id
 	@Basic(optional = false)
-	@Column(nullable = false, length = 4)
+	@Column(nullable = false, length = MAGICNumber.L4)
 	private String codigo;
 	
-	@Column(length = 70)
+	@Column(length = MAGICNumber.L70)
 	private String razonsocial;
 	
-	@Column(length = 70)
+	@Column(length = MAGICNumber.L70)
 	private String nombresbs;
 	
 	public EntidadFinanciera() {

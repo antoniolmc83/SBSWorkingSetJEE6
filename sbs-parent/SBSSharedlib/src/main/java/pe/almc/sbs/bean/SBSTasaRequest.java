@@ -50,8 +50,9 @@ public class SBSTasaRequest {
 	
 	@Override
 	public String toString() {
-		return asCondicion + " - " + asDpto + " - " + txtCondicion + " - " + 
-				txtDepartamento + " - " + txtProducto + " - " + txtTipoProducto;
+		String guion = " - ";
+		return asCondicion + guion + asDpto + guion + txtCondicion + guion + 
+				txtDepartamento + guion + txtProducto + guion + txtTipoProducto;
 	}
 	
 }

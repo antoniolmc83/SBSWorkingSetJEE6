@@ -28,7 +28,7 @@ import pe.almc.util.parser.SBSHtmlParser;
 @Service
 public class SBSWebClientServiceImpl implements SbsWebClientService  {
 
-	private final static Logger logger = LoggerFactory.getLogger(SBSWebClientServiceImpl.class);
+	private static Logger logger = LoggerFactory.getLogger(SBSWebClientServiceImpl.class);
 				
 	public SBSWebClientServiceImpl(){
 		
@@ -61,8 +61,16 @@ public class SBSWebClientServiceImpl implements SbsWebClientService  {
 		}catch (IOException e) {
 			logger.error("Error en peticion GET a URL " + direccion +": ", e);
 		}finally{
-			if(in != null) 	try {in.close();} catch (IOException e) {logger.error("Error:", e);}
-			if(urlConnection !=null) {urlConnection.disconnect();}
+			if(in != null) {
+				try {
+					in.close();
+				}catch (IOException e) {
+					logger.error("Error:", e);
+				}
+			}
+			if(urlConnection !=null) {
+				urlConnection.disconnect();
+			}
 		}
 		
 		return inputText.length()!=0 ? inputText.toString() : null;
@@ -75,8 +83,6 @@ public class SBSWebClientServiceImpl implements SbsWebClientService  {
 		HttpURLConnection urlConnection = null;
 		URL urlSBS = new URL(direccion);
 		BufferedReader in = null;
-		//String cookie = "__utma=197714925.979087399.1376772206.1376775122.1376806150.3; __utmz=197714925.1376772206.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); ASP.NET_SessionId=rsmtv4555k2r2i45yhqijm45; __utmc=197714925; __utmb=197714925.1.10.1376806150";
-		//String cookie = "__utma=197714925.1040027574.1379857726.1380986399.1380988537.12; __utmz=197714925.1380483868.6.2.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=(not%20provided); ASP.NET_SessionId=tjnr1f3bosfg4cqhxxved345; __utmc=197714925; __utmb=197714925.1.10.1380988537";
         String cookie = "__utma=197714925.1040027574.1379857726.1380986399.1380988537.12; __utmz=197714925.1380483868.6.2.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=(not%20provided); ASP.NET_SessionId=tjnr1f3bosfg4cqhxxved345; __utmc=197714925; __utmb=197714925.5.10.1380988537";       	   
 
 
@@ -90,7 +96,6 @@ public class SBSWebClientServiceImpl implements SbsWebClientService  {
 			urlConnection.setRequestProperty("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
 			urlConnection.setRequestProperty("Accept-Language", "es-MX,es-ES;q=0.8,es-AR;q=0.7,es;q=0.5,en-US;q=0.3,en;q=0.2");
 			urlConnection.setRequestProperty("Accept-Encoding", "gzip, deflate");
-			//urlConnection.setRequestProperty("Content-Length", "168");
 			urlConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
 			urlConnection.setRequestProperty("Referer", "	http://www.sbs.gob.pe/app/retasas/paginas/retasasInicio.aspx");
 			urlConnection.setRequestProperty("Cookie", cookie);
@@ -106,7 +111,7 @@ public class SBSWebClientServiceImpl implements SbsWebClientService  {
 				while( it.hasNext() ){
 					urlParameters.append( urlParameters.length() > 0 ? "&":"");
 					key = it.next();
-					urlParameters.append(key + "=" + parametros.get(key));
+					urlParameters.append(key).append("=").append(parametros.get(key));
 				}
 				
 				outputStream.write(urlParameters.toString().getBytes("UTF-8"));
@@ -126,8 +131,16 @@ public class SBSWebClientServiceImpl implements SbsWebClientService  {
 		} catch (IOException e) {
 			logger.error("Error en peticion POST a URL " + direccion +": ", e);
 		} finally{
-			if(in != null) 	try {in.close();} catch (IOException e) {logger.error("Error:", e);}
-			if(urlConnection !=null) {urlConnection.disconnect();}
+			if(in != null) {
+				try {
+					in.close();
+				} catch (IOException e) {
+					logger.error("Error:", e);
+				}
+			}
+			if(urlConnection != null) {
+				urlConnection.disconnect();
+			}
 		}
 		
 		resp = inputText.toString(); 
@@ -231,31 +244,18 @@ public class SBSWebClientServiceImpl implements SbsWebClientService  {
 			//Analizar respuesta de peticion
 			String strMitad = "_\\$\\$_";			
 			
-			String parts[] = inputText.length() > 0 ? inputText.toString().split(strMitad) : null;
+			String parts[] = inputText.length() > 0 ? inputText.split(strMitad) : null;
 			
 			if( parts!=null && parts.length > 2 ){
 				String jsonPart = parts[0];
 				String htmlPart = parts[1];
 							
-				//Analizando parte de json
-				String[] jsonTempArray = jsonPart.split(",");
-				String[] jsonArray = new String[jsonTempArray.length-1];				
-				for(int i=1, j=0; i<jsonTempArray.length; i++){
-					if( jsonTempArray[i].contains("\"value\"") ){
-						jsonArray[j] = jsonTempArray[i].replace("\"", "").replace("value", "").replace("}]", "").replace(":", "");
-						jsonArray[j] = jsonArray[j].replace("{", "").replace("}", ""); 
-						j++;
-					}			
-				}
+				//Analizando parte de json				
+				String[] jsonArray = formatJsonPart(jsonPart);
 				
-				//Analizando parte de html
-				String[] htmlTempArray = htmlPart.split("rcbItem");
-				String[] htmlArray = new String[htmlTempArray.length-2];
-				for(int i=2; i<htmlTempArray.length; i++){
-					htmlArray[i-2] = htmlTempArray[i].replace("</li><li class=\"", "").replace("\">", "").replace("</li>", "").trim();
-				}
-				
-				
+				//Analizando parte de html				
+				String[] htmlArray = formatHtmlPart(htmlPart);
+								
 				for(int i=0; i<jsonArray.length; i++ ){
 					if(jsonArray[i] != null){
 						resp.put(jsonArray[i], htmlArray[i]);
@@ -267,6 +267,48 @@ public class SBSWebClientServiceImpl implements SbsWebClientService  {
 		return resp.size()>0 ? resp : null;
 	}
 	
+	/**
+	 * Formatea la informacion de json
+	 * @param jsonPart
+	 * @return
+	 */
+	private String[] formatJsonPart(String jsonPart){
+		String[] jsonArray = null;
+		
+		//Analizando parte de json
+		String[] jsonTempArray = jsonPart.split(",");
+		jsonArray = new String[jsonTempArray.length-1];
+		
+		for(int i=1, j=0; i<jsonTempArray.length; i++){
+			if( jsonTempArray[i].contains("\"value\"") ){
+				jsonArray[j] = jsonTempArray[i].replace("\"", "").replace("value", "").replace("}]", "").replace(":", "");
+				jsonArray[j] = jsonArray[j].replace("{", "").replace("}", ""); 
+				j++;
+			}			
+		}
+		
+		return jsonArray;
+	}
+
+	/**
+	 * Formatea la informacion de html
+	 * @param jsonPart
+	 * @return
+	 */
+	private String[] formatHtmlPart(String htmlPart){
+		String[] htmlArray = null;
+		
+		//Analizando parte de json
+		String[] htmlTempArray = htmlPart.split("rcbItem");
+		htmlArray = new String[htmlTempArray.length-2];
+		
+		for(int i=2; i<htmlTempArray.length; i++){
+			htmlArray[i-2] = htmlTempArray[i].replace("</li><li class=\"", "").replace("\">", "").replace("</li>", "").trim();
+		}
+		
+		return htmlArray;
+	}
+
 	
 	/* (non-Javadoc)
 	 * @see pe.almc.util.http.SbsWebClientService#recuperarRegion()
@@ -328,10 +370,10 @@ public class SBSWebClientServiceImpl implements SbsWebClientService  {
 		String htmlResponse = "";
 		try {
 			htmlResponse = enviarPeticionPost(SBSParametros.LINK_TASA_TEA, param);
-			System.out.println(htmlResponse);
+			logger.info( htmlResponse );
 			resp = sbsHtmlParser.parserFilaTasa(htmlResponse);
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error("Error al enviar peticion post", e);
 		}
 		
 		return resp;

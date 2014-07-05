@@ -7,10 +7,13 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import pe.almc.common.MAGICNumber;
 
 @Entity
 @Table(schema = "public")
@@ -29,10 +32,10 @@ public class Producto implements Serializable{
 	@EmbeddedId
 	private ProductoPK productoPK;
 
-	@Column(length=20)
+	@Column(length=MAGICNumber.L20)
 	private String descripcion;
    
-	@OneToMany(cascade=CascadeType.ALL, mappedBy="producto")
+	@OneToMany( cascade=CascadeType.ALL, mappedBy="producto", fetch=FetchType.EAGER)
 	private Collection<Condicion> lstCondiciones;
    
 	public Producto() {
@@ -58,7 +61,7 @@ public class Producto implements Serializable{
 		this.descripcion = descripcion;
 	}
 
-	public Collection<Condicion> getLstCondicios() {
+	public Collection<Condicion> getLstCondiciones() {
 		return lstCondiciones;
 	}
 

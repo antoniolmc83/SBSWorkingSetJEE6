@@ -14,7 +14,7 @@ import pe.almc.sbs.service.EntidadFinancieraService;
 public class EntidadFinancieraServiceImpl implements EntidadFinancieraService{
 
 	@Resource
-	EntidadFinancieraRepository entidadFinancieraRepository;
+	private EntidadFinancieraRepository entidadFinancieraRepository;
 	
 	@Override
 	public EntidadFinanciera findById(String codigo) {

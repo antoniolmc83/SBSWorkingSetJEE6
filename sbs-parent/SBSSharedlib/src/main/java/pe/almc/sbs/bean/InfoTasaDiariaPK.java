@@ -9,6 +9,8 @@ import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import pe.almc.common.MAGICNumber;
+
 @Embeddable
 public class InfoTasaDiariaPK implements Serializable{
 	
@@ -18,15 +20,15 @@ public class InfoTasaDiariaPK implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Basic(optional = false)
-    @Column(nullable = false, length = 4)
+    @Column(nullable = false, length = MAGICNumber.L4)
 	private String entidadcodigo;
 	
     @Basic(optional = false)
-    @Column(nullable = false, length = 7)
+    @Column(nullable = false, length = MAGICNumber.L7)
 	private String condicioncodigo;
     
     @Basic(optional = false)
-    @Column(nullable = false, length = 4)
+    @Column(nullable = false, length = MAGICNumber.L4)
     private String regioncodigo;
 	
     @Basic(optional = false)

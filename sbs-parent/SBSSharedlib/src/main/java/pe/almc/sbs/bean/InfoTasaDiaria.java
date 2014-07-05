@@ -14,6 +14,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import pe.almc.common.MAGICNumber;
+
 @Entity
 @Table(schema = "public")
 @NamedQueries({
@@ -43,33 +45,31 @@ public class InfoTasaDiaria implements Serializable{
     @ManyToOne(optional = false)
     private Condicion condicion;
 
-	//private String entidad;
-	
-    @Column(precision = 5, scale = 2)
+    @Column(precision = MAGICNumber.L5, scale = MAGICNumber.L2)
     private BigDecimal tcea;
 
-    @Column(precision = 8, scale = 2)
+    @Column(precision = MAGICNumber.L8, scale = MAGICNumber.L2)
     private BigDecimal cuota;
 
-    @Column(precision = 5, scale = 2)
+    @Column(precision = MAGICNumber.L5, scale = MAGICNumber.L2)
     private BigDecimal trea;
 	
-    @Column(precision = 5, scale = 2)
+    @Column(precision = MAGICNumber.L5, scale = MAGICNumber.L2)
     private BigDecimal treamin;
 
-    @Column(precision = 8, scale = 2)
+    @Column(precision = MAGICNumber.L8, scale = MAGICNumber.L2)
     private BigDecimal prima;
     
-    @Column(precision = 8, scale = 2)
+    @Column(precision = MAGICNumber.L8, scale = MAGICNumber.L2)
     private BigDecimal trea1000;
 
-    @Column(precision = 8, scale = 2)
+    @Column(precision = MAGICNumber.L8, scale = MAGICNumber.L2)
     private BigDecimal trea3000;
     
-    @Column(precision = 8, scale = 2)
+    @Column(precision = MAGICNumber.L8, scale = MAGICNumber.L2)
     private BigDecimal trea10000;
     
-    @Column(length=3)
+    @Column(length = MAGICNumber.L3)
     private String monedaTrea;
 
     @Transient

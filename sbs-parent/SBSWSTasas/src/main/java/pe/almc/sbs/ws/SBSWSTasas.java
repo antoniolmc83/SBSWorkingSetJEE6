@@ -18,9 +18,9 @@ import pe.almc.sbs.bean.InfoTasaDiaria;
 @SOAPBinding(style = Style.RPC)
 public interface SBSWSTasas {
 	@WebMethod
-	public InfoTasaDiaria[] listarTasasEntidadPorFecha(String nombreEntidad, String fecha);
+	InfoTasaDiaria[] listarTasasEntidadPorFecha(String nombreEntidad, String fecha);
 
 	@WebMethod
-	public String listarTasasEntidadPorEntidad(String codigoEntidad);
+	String listarTasasEntidadPorEntidad(String codigoEntidad);
 
 }

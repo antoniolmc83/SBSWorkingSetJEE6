@@ -11,7 +11,7 @@ import pe.almc.sbs.bean.InfoTasaDiariaPK;
 import pe.almc.sbs.bean.InfoTasaDiaria;
 
 public interface InfoTasaDiariaRepository extends JpaRepository<InfoTasaDiaria, InfoTasaDiariaPK>{
-	List<InfoTasaDiaria> findByEntidadcodigo(String entidadCodigo); 
+	List<InfoTasaDiaria> findByEntidadcodigo(@Param("entidadcodigo") String entidadCodigo); 
 	List<InfoTasaDiaria> findByFecha(Date fecha);
 	@Query("SELECT i FROM InfoTasaDiaria i WHERE i.infotasadiariaPK.entidadcodigo = :entidadCodigo AND i.infotasadiariaPK.fecha = :fecha")
 	List<InfoTasaDiaria> listarTasasEntidadPorEntidad(@Param("entidadCodigo")String entidadCodigo, @Param("fecha")Date fecha);

@@ -24,6 +24,20 @@
 		<servlet-name>jaxws-servlet</servlet-name>
 		<url-pattern>/sbswstasas</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>RSApplication</servlet-name>
+		<servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+		<init-param>
+			<param-name>jersey.config.server.provider.packages</param-name>
+            <param-value>pe.almc.sbs.ws</param-value>
+		</init-param>
+		<load-on-startup>2</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RSApplication</servlet-name>
+		<url-pattern>/resources/*</url-pattern>
+	</servlet-mapping>
 
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>		

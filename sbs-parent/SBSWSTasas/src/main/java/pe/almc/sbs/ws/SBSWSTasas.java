@@ -2,6 +2,8 @@ package pe.almc.sbs.ws;
 
 
 import javax.jws.WebMethod;
+import javax.jws.WebParam;
+import javax.jws.WebResult;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import javax.jws.soap.SOAPBinding.Style;
@@ -14,13 +16,14 @@ import pe.almc.sbs.bean.InfoTasaDiaria;
  * @author ALMC
  *
  */
-@WebService(name = "SBSWSTasas", targetNamespace = "http://sbs.almc.pe/", serviceName = "SBSWSTasasService", portName = "SBSWSTasasPort")
+@WebService(name = "TestSBSWSTasas", targetNamespace="http://www.almc.com")
 @SOAPBinding(style = Style.RPC)
 public interface SBSWSTasas {
-	@WebMethod
-	InfoTasaDiaria[] listarTasasEntidadPorFecha(String nombreEntidad, String fecha);
+	@WebMethod(action="actionListarTasasEntidadPorFecha", operationName="methodListarTasasEntidadPorFecha")
+	InfoTasaDiaria[] listarTasasEntidadPorFecha(@WebParam(partName="nombreEntidad") String nombreEntidad, @WebParam(partName="fecha") String fecha);
 
 	@WebMethod
+	@WebResult(partName="number_response")
 	String listarTasasEntidadPorEntidad(String codigoEntidad);
 
 }

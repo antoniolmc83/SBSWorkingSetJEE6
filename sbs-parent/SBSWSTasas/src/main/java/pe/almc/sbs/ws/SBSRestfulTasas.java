@@ -1,22 +1,29 @@
 package pe.almc.sbs.ws;
 
-import javax.xml.transform.Source;
-import javax.xml.ws.BindingType;
-import javax.xml.ws.Provider;
-import javax.xml.ws.Service.Mode;
-import javax.xml.ws.ServiceMode;
-import javax.xml.ws.WebServiceProvider;
-import javax.xml.ws.http.HTTPBinding;
+import java.util.List;
 
-@WebServiceProvider
-@ServiceMode(value = Mode.MESSAGE)
-@BindingType(value = HTTPBinding.HTTP_BINDING)
-public class SBSRestfulTasas implements Provider<Source>{
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 
-	@Override
-	public Source invoke(Source source) {
-		// TODO Auto-generated method stub
-		return null;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import pe.almc.sbs.bean.InfoTasaDiaria;
+import pe.almc.sbs.service.InfoTasaDiariaService;
+
+
+@Path("hello")
+public class SBSRestfulTasas {
+	@Autowired
+	private InfoTasaDiariaService infoTasaDiariaService;
+	
+	@GET
+	@Produces("text/plain")
+	public String listarTasasEntidadPorEntidad(){
+		List<InfoTasaDiaria> l = infoTasaDiariaService.findByEntidadcodigo("");
+		System.out.println(l);
+		return "Hola";
 	}
+	
 
 }

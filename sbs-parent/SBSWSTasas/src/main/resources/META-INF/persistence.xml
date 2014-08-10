@@ -5,17 +5,20 @@
 	<persistence-unit name="WebApplication1PU"
 		transaction-type="RESOURCE_LOCAL">
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		
 		<class>pe.almc.sbs.bean.Producto</class>
 		<class>pe.almc.sbs.bean.Condicion</class>
 		<class>pe.almc.sbs.bean.EntidadFinanciera</class>
 		<class>pe.almc.sbs.bean.Region</class>
 		<class>pe.almc.sbs.bean.InfoTasaDiaria</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
+		<shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/SBSTasas" />
 			<property name="javax.persistence.jdbc.password" value="mardecopas" />
 			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
 			<property name="javax.persistence.jdbc.user" value="sbsuser" />
 		</properties>
+		
 	</persistence-unit>
 </persistence>

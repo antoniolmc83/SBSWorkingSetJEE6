@@ -9,4 +9,5 @@ public interface EntidadFinancieraService {
 	EntidadFinanciera findById(String codigo);
 	List<EntidadFinanciera> findAll();
 	EntidadFinanciera findByNombresbs(String nombresbs);
+	List<EntidadFinanciera> findBySBSNamePart(String namePart);
 }

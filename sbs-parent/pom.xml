@@ -11,13 +11,21 @@
     <module>SBSSharedlib</module>
     <module>SBSWSTasas</module>
   </modules>
-  
+
+  <!-- 
+  Pom version configuration for Tomcat 7:
+  JAX-WS 2.2.8, JAX-RS 2.0, SPRING 3.1.1, JPA 1.0.1
+   -->  
   <properties>
 	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	<spring.version>3.1.1.RELEASE</spring.version>
 	<junit.version>4.4</junit.version>
 	<quartz.version>1.8.6</quartz.version>
 	<jpa.version>1.0.1.Final</jpa.version>
+	<jaxws.version>2.2.8</jaxws.version>
+	<jaxws-rs.version>2.0</jaxws-rs.version>
+	<jaxws-jersey.version>2.6</jaxws-jersey.version>
+	<jaxws-spring.version>1.9</jaxws-spring.version>
   </properties>
   
   <dependencyManagement>
@@ -96,7 +104,45 @@
 			<groupId>cglib</groupId>
 			<artifactId>cglib</artifactId>
 			<version>2.2.2</version>
-		</dependency>				  
+		</dependency>
+		
+		<!-- JAX-WS -->
+		<dependency>
+		  	<groupId>com.sun.xml.ws</groupId>
+		  	<artifactId>jaxws-rt</artifactId>
+		  	<version>${jaxws.version}</version>	  			
+		</dependency>
+		
+		<!-- JAX-WS RESTFUL -->
+		<dependency>
+			<groupId>javax.ws.rs</groupId>
+			<artifactId>javax.ws.rs-api</artifactId>
+			<version>${jaxws-rs.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.containers</groupId>
+			<artifactId>jersey-container-servlet</artifactId>
+			<version>${jaxws-jersey.version}</version>
+		</dependency>		
+		<dependency>
+			<groupId>org.glassfish.jersey.ext</groupId>
+			<artifactId>jersey-spring3</artifactId>
+			<version>${jaxws-jersey.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-moxy</artifactId>
+			<version>${jaxws-jersey.version}</version>
+		</dependency>		
+		
+		<!-- JAX-WS SPRING -->
+	    <dependency>
+	      <groupId>org.jvnet.jax-ws-commons.spring</groupId>
+	      <artifactId>jaxws-spring</artifactId>
+	      <version>${jaxws-spring.version}</version>
+		</dependency>		
+		
+				
   	</dependencies>  
   </dependencyManagement>
   

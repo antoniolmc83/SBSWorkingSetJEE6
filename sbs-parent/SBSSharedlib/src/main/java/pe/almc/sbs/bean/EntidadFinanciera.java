@@ -9,9 +9,11 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import pe.almc.common.MAGICNumber;
 
+@XmlRootElement
 @Entity
 @Table(schema = "public")
 @NamedQueries({
@@ -69,5 +71,10 @@ public class EntidadFinanciera implements Serializable{
         hash += (codigo != null ? codigo.hashCode() : 0);
         return hash;
     }
+	
+	@Override
+	public String toString() {
+		return this.getClass().getName() + "{"+this.codigo+"," + this.nombresbs + "," + this.razonsocial +"}";
+	}
 
 }

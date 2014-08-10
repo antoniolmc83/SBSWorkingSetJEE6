@@ -30,5 +30,9 @@ public class EntidadFinancieraServiceImpl implements EntidadFinancieraService{
 	public EntidadFinanciera findByNombresbs(String nombresbs) {
 		return entidadFinancieraRepository.findByNombresbs(nombresbs);
 	}
+	
+	public List<EntidadFinanciera> findBySBSNamePart(String namePart){
+		return entidadFinancieraRepository.findBySBSNamePart(namePart);
+	}
 
 }
